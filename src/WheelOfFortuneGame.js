@@ -2,6 +2,8 @@ import wheelImage from './wheel.png';
 import AudioController from './AudioController';
 import './App.css';
 import React, { useState, useEffect } from 'react';
+import StartGame from './StartGame';
+import Game from './Game';
 
 function WheelOfFortuneGame() {
   const [numOfGuessesAllowed, setNumOfGuessesAllowed] = useState(0);
@@ -163,44 +165,22 @@ function WheelOfFortuneGame() {
         <img src={wheelImage} alt="Wheel of Fortune" />
       </div>
       {userEnteredGuesses ? (
-        <>
-          <div className="phrase-display">The phrase is: {phrase}</div>
-          <div className="hidden-phrase-display">Hidden Phrase: {hiddenPhrase}</div>
-          <div className="input-container">
-            <input
-              type="text"
-              placeholder="Enter  a  letter"
-              value={userGuess}
-              onChange={(e) => setUserGuess(e.target.value)}
-            />
-            <button onClick={handleGuess}>Guess</button>
-            <button onClick={purchaseExtraGuesses}>Purchase 3 Extra Guesses</button>
-          </div>
-          <div className="scoreboard">
-            <p>Score: {score}</p>
-            <p>Number of Guesses Allowed: {numOfGuessesAllowed}</p>
-            <p>Number of Incorrect Guesses: {numOfIncorrect}</p>
-            <p>Number of Guesses Remaining: {numOfGuessesAllowed - numOfGuess}</p>
-          </div>
-          {gameOver && (
-            <div className="game-over-message">
-              {hiddenPhrase === phrase ? (
-                <h2 className="congrats-info">Congratulations! You Win!!</h2>
-              ) : (
-                <div>
-                  <h2 className="lose-info">Game Over</h2>
-                  <p>The correct phrase was: {phrase}. You missed {numOfIncorrect} times.</p>
-                </div>
-              )}
-              <p>Your final score is: {score}</p>
-              <button onClick={promptRestartGame}>Play Again</button>
-            </div>
-          )}
-        </>
+        <Game 
+          phrase = {phrase}
+          hiddenPhrase = {hiddenPhrase}
+          userGuess = {userGuess}
+          setUserGuess = {setUserGuess}
+          handleGuess = {handleGuess}
+          purchaseExtraGuesses = {purchaseExtraGuesses}
+          score = {score}
+          numOfGuess = {numOfGuess}
+          numOfGuessesAllowed = {numOfGuessesAllowed}
+          numOfIncorrect = {numOfIncorrect}
+          gameOver = {gameOver}
+          promptRestartGame = {promptRestartGame}
+          />
       ) : (
-        <div className="start-container">
-          <button onClick={startGame}>Start Game</button>
-        </div>
+        <StartGame startGame = {startGame}/>
       )}
       <footer>
         <p>CS514 - Web Game Project - Made by Junyu and Xueting</p>
