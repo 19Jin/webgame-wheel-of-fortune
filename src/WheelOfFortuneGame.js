@@ -2,6 +2,7 @@ import wheelImage from './wheel.png';
 import AudioController from './AudioController';
 import './App.css';
 import React, { useState, useEffect } from 'react';
+import HeaderComponent from './HeaderComponent';
 
 function WheelOfFortuneGame() {
   const [numOfGuessesAllowed, setNumOfGuessesAllowed] = useState(0);
@@ -151,17 +152,11 @@ function WheelOfFortuneGame() {
 
   return (
     <div className="WheelOfFortuneGame">
-      <header>
-        <h1>Wheel of Fortune</h1>
-      </header>
-      <AudioController 
-        audioFile="https://dl.vgmdownloads.com/soundtracks/super-mario-bros.-the-30th-anniversary/weknekelam/1-01.%20Ground%20BGM%20-%20Super%20Mario%20Bros..mp3" 
-        playWinSound={hiddenPhrase === phrase && gameOver}
-        playLoseSound={gameOver && hasLost}
+      <HeaderComponent />
+      <AudioController audioFile="https://dl.vgmdownloads.com/soundtracks/super-mario-bros.-the-30th-anniversary/weknekelam/1-01.%20Ground%20BGM%20-%20Super%20Mario%20Bros..mp3" 
+      playWinSound={hiddenPhrase === phrase && gameOver}
+      playLoseSound={gameOver && hasLost}
       />
-      <div className="wheel-container">
-        <img src={wheelImage} alt="Wheel of Fortune" />
-      </div>
       {userEnteredGuesses ? (
         <>
           <div className="phrase-display">The phrase is: {phrase}</div>

@@ -30,7 +30,7 @@ body, html {
 }
 
 header {
-  padding: 70px;
+  padding: 30px;
   font-size: 2.3em;
   background-image: linear-gradient(to bottom, #ffe26f, #fff8dc); /* Start with light yellow, end with white */
   text-align: center;
@@ -44,6 +44,7 @@ header {
 
 header h1 {
   font-family: 'PixelFont', sans-serif; /* Use the custom pixel font */
+  -webkit-text-stroke: 1px #ad5d35dc;
 }
 
 .wheel-container {
@@ -134,8 +135,16 @@ button:hover {
 }
 
 footer {
-  margin-top: 80px;
+  margin-top: 60px;
   font-family: 'PixelFont', sans-serif;
   font-size: 1.0em;
   color:#ffe168f6;
+}
+
+.start-container {
+  padding: 30px;
+}
+
+.LogInOut {
+  padding: 30px;
 }
