@@ -160,12 +160,14 @@ function WheelOfFortuneGame() {
 
       {userEnteredGuesses && userName && (
         <div className='userinfo-display'>
+          
           <div className='userinfo-detail'>User Name : {userName}</div>
           <div className='userinfo-detail'>User Name : {userName}</div>
           <div className='userinfo-detail'>User Name : {userName}</div>
           <div className='userinfo-detail'>User Name : {userName}</div>
           <div className='userinfo-detail'>User Name : {userName}</div>
           <div className='userinfo-detail'>User Name : {userName}</div>
+         
         </div>
       )}
 

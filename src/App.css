@@ -160,6 +160,8 @@ footer {
   left: 30px; 
   top: 100px; 
   width: 240px;
+  height: 540px;
+  overflow-y: scroll;
   border-radius: 15px;
   background-color: transparent; 
   padding: 10px; /* 内边距 */
