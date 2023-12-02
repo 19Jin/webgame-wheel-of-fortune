@@ -1,6 +1,5 @@
 import React from 'react';
 import wheelImage from './wheel.png';
-import AudioController from './AudioController';
 import './App.css';
 
 const HeaderComponent = () => {

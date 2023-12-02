@@ -1,4 +1,3 @@
-import wheelImage from './wheel.png';
 import AudioController from './AudioController';
 import './App.css';
 import React, { useState, useEffect } from 'react';
@@ -16,6 +15,7 @@ function WheelOfFortuneGame() {
   const [score, setScore] = useState(0);
   const [guessedLetters, setGuessedLetters] = useState([]);
   const [hasLost, setHasLost] = useState(false);
+  const [userName, setUserName] = useState('');
 
   useEffect(() => {
     setNumOfGuessesAllowed(10);
@@ -157,6 +157,18 @@ function WheelOfFortuneGame() {
       playWinSound={hiddenPhrase === phrase && gameOver}
       playLoseSound={gameOver && hasLost}
       />
+
+      {userEnteredGuesses && userName && (
+        <div className='userinfo-display'>
+          <div className='userinfo-detail'>User Name : {userName}</div>
+          <div className='userinfo-detail'>User Name : {userName}</div>
+          <div className='userinfo-detail'>User Name : {userName}</div>
+          <div className='userinfo-detail'>User Name : {userName}</div>
+          <div className='userinfo-detail'>User Name : {userName}</div>
+          <div className='userinfo-detail'>User Name : {userName}</div>
+        </div>
+      )}
+
       {userEnteredGuesses ? (
         <>
           <div className="phrase-display">The phrase is: {phrase}</div>
@@ -194,7 +206,15 @@ function WheelOfFortuneGame() {
         </>
       ) : (
         <div className="start-container">
-          <button onClick={startGame}>Start Game</button>
+          <input
+              type="text"
+              placeholder="Enter  Your User Name"
+              value={userName}
+              onChange={(e) => setUserName(e.target.value)}
+          />
+          <div className='start-button'>
+            <button onClick={startGame}>Start Game</button>
+          </div>
         </div>
       )}
       <footer>
