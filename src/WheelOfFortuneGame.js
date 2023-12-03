@@ -2,8 +2,10 @@ import AudioController from './AudioController';
 import './App.css';
 import React, { useState, useEffect } from 'react';
 import HeaderComponent from './HeaderComponent';
+import UserInfoDisplay from './UserInfoDisplay';
+import {saveScoreToDB} from './SaveData';
 
-function WheelOfFortuneGame() {
+function WheelOfFortuneGame({userEmail}) {
   const [numOfGuessesAllowed, setNumOfGuessesAllowed] = useState(0);
   const [phrase, setPhrase] = useState('');
   const [hiddenPhrase, setHiddenPhrase] = useState('');
@@ -90,6 +92,9 @@ function WheelOfFortuneGame() {
   const checkWinLoss = (hasCorrectGuess) => {
     const won = hiddenPhrase === phrase;
     setGameOver(true);
+
+    saveScoreToDB(userEmail, score, userName);
+
     if (!won) {
       setHasLost(true);
     }
@@ -153,23 +158,12 @@ function WheelOfFortuneGame() {
   return (
     <div className="WheelOfFortuneGame">
       <HeaderComponent />
-      <AudioController audioFile="https://dl.vgmdownloads.com/soundtracks/super-mario-bros.-the-30th-anniversary/weknekelam/1-01.%20Ground%20BGM%20-%20Super%20Mario%20Bros..mp3" 
+      <AudioController audioFile={require('./assets/01-main-theme-overworld.mp3')}
       playWinSound={hiddenPhrase === phrase && gameOver}
       playLoseSound={gameOver && hasLost}
       />
 
-      {userEnteredGuesses && userName && (
-        <div className='userinfo-display'>
-          
-          <div className='userinfo-detail'>User Name : {userName}</div>
-          <div className='userinfo-detail'>User Name : {userName}</div>
-          <div className='userinfo-detail'>User Name : {userName}</div>
-          <div className='userinfo-detail'>User Name : {userName}</div>
-          <div className='userinfo-detail'>User Name : {userName}</div>
-          <div className='userinfo-detail'>User Name : {userName}</div>
-         
-        </div>
-      )}
+      {userEnteredGuesses && userName && <UserInfoDisplay userName={userName}/>}
 
       {userEnteredGuesses ? (
         <>

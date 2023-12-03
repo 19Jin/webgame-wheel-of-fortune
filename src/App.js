@@ -9,10 +9,12 @@ import { getAuth, signOut } from 'firebase/auth';
 function App() {
   // user is the currently logged in user
 	const [user, setUser] = useState(null);
+  const [userEmail, setUserEmail] = useState('');
 
   // this will be called by the LoginForm
-	function HandleLogin(user) {
+	function HandleLogin(user, email) {
 		setUser(user);
+    setUserEmail(email);
 	}
 
   function HandleLogout() {
@@ -29,7 +31,7 @@ function App() {
     <div className="App">
       {user ? (
         <div>
-          <WheelOfFortuneGame/>
+          <WheelOfFortuneGame userEmail={userEmail}/>
           <div className='LogInOut'>
             <button onClick={HandleLogout}>Log Out</button>
           </div>

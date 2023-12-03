@@ -12,6 +12,11 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpSession;
 
+import java.util.Collections;
+import java.util.Comparator;
+
+// import org.springframework.data.domain.Sort;
+
 @RestController
 public class ScoreController {
   private final ScoreRepository scoreRepository;
@@ -41,11 +46,15 @@ public class ScoreController {
     scores.forEach(scoreList::add);
     return scoreList;
   }
-  /*public String findAllScores() {
-    Iterable<Score> scores = this.scoreRepository.findAll();
+
+  @GetMapping("/findByUserName")
+  @ResponseBody
+  @CrossOrigin(origins = "*")
+  public List<Score> findByUserName(@RequestParam String userName) {
+  	Iterable<Score> scores = this.scoreRepository.findByUserName(userName);
     List<Score> scoreList = new ArrayList<>();
     scores.forEach(scoreList::add);
-    return scores.toString();
-    
-  } */
+    scoreList.sort(Comparator.comparingInt(Score::getScore).reversed());
+    return scoreList;
+  }
 }
