@@ -46,9 +46,13 @@ function LoginForm({LoginEvent}) {
 	useEffect(() => {
 		const auth = getAuth();
 		auth.onAuthStateChanged(user => {
+			let userEmail;
 			if (user) {
     			// User is signed in.
     			console.log("User is signed in:", user);
+				// console.log(user);
+				userEmail = user.email;
+				console.log("User email: ", userEmail);
     			
     			
     			setLoggedUser(user);
@@ -57,7 +61,7 @@ function LoginForm({LoginEvent}) {
     		// No user is signed in.
     			console.log("No user is signed in.");
   			}
-  			LoginEvent(user);
+  			LoginEvent(user, userEmail);
   		});
 	}, []);
 	// note the ? to show either login or logout button
