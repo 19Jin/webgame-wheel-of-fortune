@@ -6,7 +6,7 @@ const HeaderComponent = () => {
     return (
         <div className='WheelOfFortuneGame'>
             <header>
-                <h1>Wheel of Fortune</h1>
+                <h1>Wheel&nbsp;&nbsp;Of&nbsp;&nbsp;&nbsp;&nbsp;Fortune</h1>
             </header>
             
             <div className='wheel-container'>

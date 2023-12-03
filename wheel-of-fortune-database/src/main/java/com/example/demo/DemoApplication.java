@@ -54,4 +54,10 @@ public class DemoApplication {
   public void removeAllScores() {
      this.scoreRepository.deleteAll();
   }
+  
+//   @ShellMethod("Loads scores by googleUID(google email): find-by-googleUID <googleUID>")
+//   public String findByGoogleUid(String googleUID) {
+//      List<Score> scores = this.scoreRepository.findByGoogleUid(googleUID);
+//      return scores.toString();
+//   }
 }

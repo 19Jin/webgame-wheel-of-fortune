@@ -2,15 +2,15 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 
-const UserInfoDisplay = ({ googleUID, refreshTrigger }) => {
+const AllInfoDisplay = () => {
   const [userInfo, setUserInfo] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => { displayUserInfo(); }, [googleUID, refreshTrigger]);
+  useEffect(() => { displayUserInfo(); });
 
   function displayUserInfo(){
-    axios.get(`https://wheel-of-fortune-406910.wl.r.appspot.com/findByGoogleUID?googleUID=${googleUID}`)
+    axios.get('https://wheel-of-fortune-406910.wl.r.appspot.com/findAllScores')
     .then(response => {
       setUserInfo(response.data);
       setLoading(false);
@@ -28,14 +28,14 @@ const UserInfoDisplay = ({ googleUID, refreshTrigger }) => {
   }
   
   return (
-    <div className='userinfo-display'>
+    <div className='allinfo-display'>
       {userInfo.map((data, index) => (
         <div key={index} className='userinfo-detail'>
-          {data.userName}: {data.score}, {data.time}
+          {data.googleUID}, {data.userName}: {data.score}
         </div>
       ))}
     </div>
   );
 }
 
-export default UserInfoDisplay;
+export default AllInfoDisplay;

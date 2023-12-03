@@ -65,7 +65,7 @@ header h1 {
   margin: 10px 0;
 }
 
-.input-container input, .start-container input {
+.input-container input, .start-container input, .change-username input {
   padding: 12px 13px;
   margin: 5px; 
   border: 2px solid #ff8c00;
@@ -77,14 +77,13 @@ header h1 {
   outline: none;
 }
 
-.input-container input:focus, .start-container input:focus {
+.input-container input:focus, .start-container input:focus, .change-username input:focus {
   border-color: #884b00; /* Darker border color on focus */
 }
 
 .scoreboard {
-  /* margin-top: 40px; */
   background-color: #fff8dc;
-  padding: 10px;
+  /* padding: 10px; */
   margin-bottom: 20px;
   font-family: 'PixelFont', sans-serif;
   font-size: 1.7em;
@@ -93,7 +92,7 @@ header h1 {
 
 
 .phrase-display {
-  margin-top: 70px;
+  margin-top: 30px;
   font-family: 'PixelFont', sans-serif;
   font-size: 2.5em;
   color: #4d3b25d7;
@@ -170,6 +169,57 @@ footer {
   font-family: 'PixelFont', sans-serif;
 }
 
+.allinfo-display{
+  position: fixed;
+  right: 30px; 
+  top: 100px; 
+  width: 240px;
+  height: 540px;
+  overflow-y: scroll;
+  border-radius: 15px;
+  background-color: transparent; 
+  padding: 10px; /* 内边距 */
+  border: 3px dashed #ff9b20e9; 
+  box-shadow: 0px 0px 10px rgba(0,0,0,0.1); /* 阴影效果 */
+  font-family: 'PixelFont', sans-serif;
+}
+
 .userinfo-detail {
-  font-size: 26px; 
+  font-size: 25px; 
+  text-align: left;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-bottom: 3px dashed #ff9b20e9;
+}
+
+.current-google-id-container{
+  position: fixed;
+  left: 30px; 
+  top: 18px; 
+  width: 240px;
+  height: 30px;
+  border-radius: 15px;
+  background-color: transparent; 
+  padding: 10px;
+  /* border: 3px dashed #ff9b20e9;  */
+  /* box-shadow: 0px 0px 10px rgba(0,0,0,0.1); shadow effect */
+  font-family: 'PixelFont', sans-serif;
+}
+
+.google-id{
+  text-align: left;
+  margin-top: 0px;
+  font-size: 30px; 
+  color: #ff9b20e9; 
+}
+
+.id-container{
+  font-size: 20px; 
+  text-align: left;
+}
+
+.change-username{
+  font-size: 25px; 
+  margin-bottom: 10px;
+  padding: 10px;
 }

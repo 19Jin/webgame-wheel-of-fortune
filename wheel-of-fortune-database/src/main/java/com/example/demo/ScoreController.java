@@ -44,6 +44,7 @@ public class ScoreController {
   	Iterable<Score> scores = this.scoreRepository.findAll();
     List<Score> scoreList = new ArrayList<>();
     scores.forEach(scoreList::add);
+    scoreList.sort(Comparator.comparingInt(Score::getScore).reversed());
     return scoreList;
   }
 
@@ -52,6 +53,17 @@ public class ScoreController {
   @CrossOrigin(origins = "*")
   public List<Score> findByUserName(@RequestParam String userName) {
   	Iterable<Score> scores = this.scoreRepository.findByUserName(userName);
+    List<Score> scoreList = new ArrayList<>();
+    scores.forEach(scoreList::add);
+    scoreList.sort(Comparator.comparingInt(Score::getScore).reversed());
+    return scoreList;
+  }
+
+  @GetMapping("/findByGoogleUID")
+  @ResponseBody
+  @CrossOrigin(origins = "*")
+  public List<Score> findByGoogleUID(@RequestParam String googleUID) {
+  	Iterable<Score> scores = this.scoreRepository.findByGoogleUID(googleUID);
     List<Score> scoreList = new ArrayList<>();
     scores.forEach(scoreList::add);
     scoreList.sort(Comparator.comparingInt(Score::getScore).reversed());
