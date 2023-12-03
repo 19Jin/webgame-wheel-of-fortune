@@ -4,8 +4,9 @@ import React, { useState, useEffect } from 'react';
 import HeaderComponent from './HeaderComponent';
 import UserInfoDisplay from './UserInfoDisplay';
 import {saveScoreToDB} from './SaveData';
+import AllInfoDisplay from './AllInfoDisplay';
 
-function WheelOfFortuneGame({userEmail}) {
+function WheelOfFortuneGame({userEmail, onScoreSaved, refreshUserInfo}) {
   const [numOfGuessesAllowed, setNumOfGuessesAllowed] = useState(0);
   const [phrase, setPhrase] = useState('');
   const [hiddenPhrase, setHiddenPhrase] = useState('');
@@ -18,6 +19,8 @@ function WheelOfFortuneGame({userEmail}) {
   const [guessedLetters, setGuessedLetters] = useState([]);
   const [hasLost, setHasLost] = useState(false);
   const [userName, setUserName] = useState('');
+  // const [googleUID, setGoogleUID] = useState('');
+  const [newUserName, setNewUserName] = useState('');
 
   useEffect(() => {
     setNumOfGuessesAllowed(10);
@@ -93,7 +96,7 @@ function WheelOfFortuneGame({userEmail}) {
     const won = hiddenPhrase === phrase;
     setGameOver(true);
 
-    saveScoreToDB(userEmail, score, userName);
+    saveScoreToDB(userEmail, score, userName, onScoreSaved);
 
     if (!won) {
       setHasLost(true);
@@ -153,6 +156,12 @@ function WheelOfFortuneGame({userEmail}) {
     }
   };
 
+  const handleNewUserName = (e) => {
+    if(newUserName){
+      setUserName(newUserName);
+    }
+  };
+
   const hasWon = hiddenPhrase === phrase;
 
   return (
@@ -163,24 +172,47 @@ function WheelOfFortuneGame({userEmail}) {
       playLoseSound={gameOver && hasLost}
       />
 
-      {userEnteredGuesses && userName && <UserInfoDisplay userName={userName}/>}
+      {/* {userEnteredGuesses && userName && <UserInfoDisplay googleUID={userEmail}/> && <AllInfoDisplay/>} */}
+      {userEnteredGuesses && userName && (
+        <div>
+          <div className='current-google-id-container'>
+            <div className='google-id'>Google&nbsp;&nbsp;ID: </div>
+            <div className='id-container'>{userEmail}</div>
+          </div>
+          <UserInfoDisplay googleUID={userEmail} className="userinfo-display"/>
+          <AllInfoDisplay className="allinfo-display"/>
+        </div>
+      )}
+
+      {userEnteredGuesses && (
+        <UserInfoDisplay googleUID={userEmail} refreshTrigger={refreshUserInfo} />
+      )}
 
       {userEnteredGuesses ? (
         <>
-          <div className="phrase-display">The phrase is: {phrase}</div>
-          <div className="hidden-phrase-display">Hidden Phrase: {hiddenPhrase}</div>
+          <div className="change-username">
+            <input
+              type="text"
+              placeholder="Enter  New User Name"
+              value={newUserName}
+              onChange={(e) => setNewUserName(e.target.value)}
+            />
+            <button onClick={handleNewUserName}>Set New Name</button>
+          </div>
+          <div className="phrase-display">The&nbsp;&nbsp;&nbsp;phrase&nbsp;&nbsp;is:&nbsp; {phrase}</div>
+          <div className="hidden-phrase-display">Hidden&nbsp;&nbsp;&nbsp;Phrase: {hiddenPhrase}</div>
           <div className="input-container">
             <input
               type="text"
-              placeholder="Enter  a  letter"
+              placeholder="Enter &nbsp;&nbsp;a&nbsp;&nbsp;&nbsp;&nbsp;letter"
               value={userGuess}
               onChange={(e) => setUserGuess(e.target.value)}
             />
             <button onClick={handleGuess}>Guess</button>
-            <button onClick={purchaseExtraGuesses}>Purchase 3 Extra Guesses</button>
+            <button onClick={purchaseExtraGuesses}>Purchase&nbsp;&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;Extra&nbsp;&nbsp;&nbsp;Guesses</button>
           </div>
           <div className="scoreboard">
-            <p>Score: {score}</p>
+            <p>{userName}'s &nbsp;&nbsp; Score: {score}</p>
             <p>Number of Guesses Allowed: {numOfGuessesAllowed}</p>
             <p>Number of Incorrect Guesses: {numOfIncorrect}</p>
             <p>Number of Guesses Remaining: {numOfGuessesAllowed - numOfGuess}</p>

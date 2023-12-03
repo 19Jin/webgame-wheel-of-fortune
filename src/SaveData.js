@@ -1,4 +1,4 @@
-async function saveScoreToDB(googleUID, score, userName){
+async function saveScoreToDB(googleUID, score, userName, onCompleted){
     const data = {
         googleUID : googleUID,
         score : score,
@@ -16,7 +16,9 @@ async function saveScoreToDB(googleUID, score, userName){
             body : JSON.stringify(data),
         });
 
-        if (!response.ok){
+        if(response.ok){
+            onCompleted();
+        }else if (!response.ok){
             throw new Error('Network response was not ok');
         }
 

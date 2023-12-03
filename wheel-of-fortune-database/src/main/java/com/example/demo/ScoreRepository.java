@@ -16,4 +16,7 @@ public interface ScoreRepository extends DatastoreRepository<Score, Long> {
   List<Score> findByUserNameAndScore(String userName, int score);
 
   List<Score> findByUserName(String userName, Sort sort);
+
+  List<Score> findByGoogleUID(String googleUID);
+
 }
