@@ -156,15 +156,15 @@ footer {
 
 .userinfo-display {
   position: fixed;
-  left: 30px; 
+  left: 10px; 
   top: 100px; 
-  width: 240px;
+  width: 300px;
   height: 540px;
   overflow-y: scroll;
   border-radius: 15px;
   background-color: transparent; 
   padding: 10px; /* 内边距 */
-  border: 3px dashed #ff9b20e9; 
+  border: 3px dashed #ff9b205d; 
   box-shadow: 0px 0px 10px rgba(0,0,0,0.1); /* 阴影效果 */
   font-family: 'PixelFont', sans-serif;
 }
@@ -185,7 +185,7 @@ footer {
 }
 
 .userinfo-detail {
-  font-size: 25px; 
+  font-size: 24px; 
   text-align: left;
   margin-bottom: 10px;
   padding: 10px;
@@ -222,4 +222,20 @@ footer {
   font-size: 25px; 
   margin-bottom: 10px;
   padding: 10px;
+}
+
+.delete-button{
+  background-color: #ff4c20e9;
+  color: #fff8dc;
+  border: none;
+  padding: 5px 5px;
+  /* margin: 5px; */
+  cursor: pointer;
+  font-size: 0.5em;
+  border-radius: 20px;
+  font-family: 'PixelFont', sans-serif;
+}
+
+.delete-button:hover {
+  background-color: #9b2c11e9;
 }

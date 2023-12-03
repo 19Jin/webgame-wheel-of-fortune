@@ -21,6 +21,17 @@ const UserInfoDisplay = ({ googleUID, refreshTrigger }) => {
     });
   };
 
+  function handleDelete(id) {
+    axios.delete(`http://localhost:8080/deleteById?id=${id}`)
+    .then(() => {
+      displayUserInfo();
+    })
+    .catch(error => {
+      setError(error.message);
+    });
+  }
+
+
   if (loading) {
     return <p>Loading...</p>
   }else if (error) {
@@ -32,6 +43,7 @@ const UserInfoDisplay = ({ googleUID, refreshTrigger }) => {
       {userInfo.map((data, index) => (
         <div key={index} className='userinfo-detail'>
           {data.userName}: {data.score}, {data.time}
+          <button className="delete-button" onClick={() => handleDelete(data.id)}>DEL</button>
         </div>
       ))}
     </div>

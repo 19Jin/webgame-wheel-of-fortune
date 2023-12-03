@@ -19,7 +19,6 @@ function WheelOfFortuneGame({userEmail, onScoreSaved, refreshUserInfo}) {
   const [guessedLetters, setGuessedLetters] = useState([]);
   const [hasLost, setHasLost] = useState(false);
   const [userName, setUserName] = useState('');
-  // const [googleUID, setGoogleUID] = useState('');
   const [newUserName, setNewUserName] = useState('');
 
   useEffect(() => {
