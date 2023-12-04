@@ -168,6 +168,7 @@ function WheelOfFortuneGame({userEmail, onScoreSaved, refreshUserInfo}) {
     }
   };
 
+
   const hasWon = hiddenPhrase === phrase;
 
   return (

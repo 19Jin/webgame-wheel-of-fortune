@@ -45,11 +45,11 @@ function App() {
               <WheelOfFortuneGame userEmail={userEmail} onScoreSaved={handleRefreshUserInfo} refreshUserInfo={refreshUserInfo}/>
                 <div className='LogInOut'>
                   <button onClick={HandleLogout}>Log Out</button>
-                  <Link to="/redeem"><button>Gift Redeem</button></Link>
+                  <Link to='/redeem'><button>Gift Redeem</button></Link>
                 </div>
             </Route>
             <Route path="/redeem">
-              <RedeemGift/>
+              <RedeemGift userEmail={userEmail}/>
             </Route>
           </Switch>
         </div>

@@ -24,3 +24,12 @@
   p{
     margin:0;
   }
+
+  .user-points{
+    position: fixed;
+    right: 40px; 
+    top: 65px; 
+    font-family: 'PixelFont', sans-serif;
+    font-size: 30px;
+    color: #ff4c20e9;
+  }
