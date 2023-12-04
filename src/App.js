@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom'; // Import Router and related components
 import './App.css';
 // import WheelOfFortuneGame from './WheelOfFortuneGame';
 import LoginForm from './LoginForm';
@@ -6,6 +7,7 @@ import HeaderComponent from './HeaderComponent';
 import WheelOfFortuneGame from './WheelOfFortuneGame';
 import UserInfoDisplay from './UserInfoDisplay';
 import { getAuth, signOut } from 'firebase/auth';
+import RedeemGift from './RedeemGift';
 
 function App() {
   // user is the currently logged in user
@@ -35,12 +37,21 @@ function App() {
 
   return (
     <div className="App">
+      <Router>
       {user ? (
         <div>
-          <WheelOfFortuneGame userEmail={userEmail} onScoreSaved={handleRefreshUserInfo} refreshUserInfo={refreshUserInfo}/>
-          <div className='LogInOut'>
-            <button onClick={HandleLogout}>Log Out</button>
-          </div>
+          <Switch>
+            <Route exact path="/">
+              <WheelOfFortuneGame userEmail={userEmail} onScoreSaved={handleRefreshUserInfo} refreshUserInfo={refreshUserInfo}/>
+                <div className='LogInOut'>
+                  <button onClick={HandleLogout}>Log Out</button>
+                  <Link to="/redeem"><button>Gift Redeem</button></Link>
+                </div>
+            </Route>
+            <Route path="/redeem">
+              <RedeemGift/>
+            </Route>
+          </Switch>
         </div>
        ) :(
         <div>
@@ -48,6 +59,7 @@ function App() {
           <LoginForm LoginEvent={HandleLogin}/>
         </div>
       )}
+      </Router>
     </div>
   );
 }
