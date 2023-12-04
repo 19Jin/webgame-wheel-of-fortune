@@ -30,7 +30,7 @@ body, html {
 }
 
 header {
-  padding: 70px;
+  padding: 30px;
   font-size: 2.3em;
   background-image: linear-gradient(to bottom, #ffe26f, #fff8dc); /* Start with light yellow, end with white */
   text-align: center;
@@ -44,6 +44,7 @@ header {
 
 header h1 {
   font-family: 'PixelFont', sans-serif; /* Use the custom pixel font */
+  -webkit-text-stroke: 1px #ad5d35dc;
 }
 
 .wheel-container {
@@ -64,26 +65,25 @@ header h1 {
   margin: 10px 0;
 }
 
-.input-container input {
-  padding: 10px 15px;
+.input-container input, .start-container input, .change-username input {
+  padding: 12px 13px;
   margin: 5px; 
   border: 2px solid #ff8c00;
   border-radius: 15px;
   font-family: 'PixelFont', sans-serif;
-  font-size: 1em;
+  font-size: 1.2em;
   color: #333;
   background-color: #fff8dc;
   outline: none;
 }
 
-.input-container input:focus {
-  border-color: #884b00; /* Darker border color on focus, similar to your button hover state */
+.input-container input:focus, .start-container input:focus, .change-username input:focus {
+  border-color: #884b00; /* Darker border color on focus */
 }
 
 .scoreboard {
-  /* margin-top: 40px; */
   background-color: #fff8dc;
-  padding: 10px;
+  /* padding: 10px; */
   margin-bottom: 20px;
   font-family: 'PixelFont', sans-serif;
   font-size: 1.7em;
@@ -92,7 +92,7 @@ header h1 {
 
 
 .phrase-display {
-  margin-top: 70px;
+  margin-top: 30px;
   font-family: 'PixelFont', sans-serif;
   font-size: 2.5em;
   color: #4d3b25d7;
@@ -134,8 +134,117 @@ button:hover {
 }
 
 footer {
-  margin-top: 80px;
+  margin-top: 60px;
   font-family: 'PixelFont', sans-serif;
   font-size: 1.0em;
   color:#ffe168f6;
+}
+
+.start-container {
+  /* padding: 30px; */
+  margin-top: 30px;
+}
+
+.LogInOut {
+  padding: 30px;
+}
+
+.start-button {
+  /* padding: 30px; */
+  margin-top: 30px;
+}
+
+.userinfo-display {
+  position: fixed;
+  left: 10px; 
+  top: 100px; 
+  width: 300px;
+  height: 540px;
+  overflow-y: scroll;
+  border-radius: 15px;
+  background-color: transparent; 
+  padding: 10px; /* 内边距 */
+  border: 3px dashed #ff9b205d; 
+  box-shadow: 0px 0px 10px rgba(0,0,0,0.1); /* 阴影效果 */
+  font-family: 'PixelFont', sans-serif;
+}
+
+.allinfo-display{
+  position: fixed;
+  right: 30px; 
+  top: 100px; 
+  width: 240px;
+  height: 540px;
+  overflow-y: scroll;
+  border-radius: 15px;
+  background-color: transparent; 
+  padding: 10px; /* 内边距 */
+  border: 3px dashed #ff9b205d; 
+  box-shadow: 0px 0px 10px rgba(0,0,0,0.1); /* 阴影效果 */
+  font-family: 'PixelFont', sans-serif;
+}
+
+.userinfo-detail {
+  font-size: 24px; 
+  text-align: left;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-bottom: 3px dashed #ff9b20e9;
+}
+
+.current-google-id-container{
+  position: fixed;
+  left: 30px; 
+  top: 18px; 
+  width: 240px;
+  height: 30px;
+  border-radius: 15px;
+  background-color: transparent; 
+  padding: 10px;
+  /* border: 3px dashed #ff9b20e9;  */
+  /* box-shadow: 0px 0px 10px rgba(0,0,0,0.1); shadow effect */
+  font-family: 'PixelFont', sans-serif;
+}
+
+.google-id{
+  text-align: left;
+  margin-top: 0px;
+  font-size: 30px; 
+  color: #ff9b20e9; 
+}
+
+.id-container{
+  font-size: 20px; 
+  text-align: left;
+}
+
+.change-username{
+  font-size: 25px; 
+  margin-bottom: 10px;
+  padding: 10px;
+}
+
+.delete-button{
+  background-color: #ff4c20e9;
+  color: #fff8dc;
+  border: none;
+  padding: 5px 5px;
+  /* margin: 5px; */
+  cursor: pointer;
+  font-size: 0.5em;
+  border-radius: 20px;
+  font-family: 'PixelFont', sans-serif;
+}
+
+.delete-button:hover {
+  background-color: #9b2c11e9;
+}
+
+
+.current-total-points{
+  position: fixed;
+  right: 40px; 
+  top: 65px; 
+  font-family: 'PixelFont', sans-serif;
+  font-size: 30px;
 }

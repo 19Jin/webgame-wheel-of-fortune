@@ -1,9 +1,13 @@
-import wheelImage from './wheel.png';
 import AudioController from './AudioController';
 import './App.css';
 import React, { useState, useEffect } from 'react';
+import HeaderComponent from './HeaderComponent';
+import UserInfoDisplay from './UserInfoDisplay';
+import {saveScoreToDB} from './SaveData';
+import AllInfoDisplay from './AllInfoDisplay';
+import ConfirmBox from './ConfirmBox';
 
-function WheelOfFortuneGame() {
+function WheelOfFortuneGame({userEmail, onScoreSaved, refreshUserInfo}) {
   const [numOfGuessesAllowed, setNumOfGuessesAllowed] = useState(0);
   const [phrase, setPhrase] = useState('');
   const [hiddenPhrase, setHiddenPhrase] = useState('');
@@ -15,6 +19,9 @@ function WheelOfFortuneGame() {
   const [score, setScore] = useState(0);
   const [guessedLetters, setGuessedLetters] = useState([]);
   const [hasLost, setHasLost] = useState(false);
+  const [userName, setUserName] = useState('');
+  const [newUserName, setNewUserName] = useState('');
+  const [showConfirmBox, setShowConfirmBox] = useState(false);
 
   useEffect(() => {
     setNumOfGuessesAllowed(10);
@@ -89,6 +96,14 @@ function WheelOfFortuneGame() {
   const checkWinLoss = (hasCorrectGuess) => {
     const won = hiddenPhrase === phrase;
     setGameOver(true);
+
+    setShowConfirmBox(true);
+
+    // const updateScore = window.confirm('Game Over. Do you want to update this game score?');
+    // if (updateScore) {
+    //   saveScoreToDB(userEmail, score, userName, onScoreSaved);
+    // }
+
     if (!won) {
       setHasLost(true);
     }
@@ -147,37 +162,64 @@ function WheelOfFortuneGame() {
     }
   };
 
+  const handleNewUserName = (e) => {
+    if(newUserName){
+      setUserName(newUserName);
+    }
+  };
+
+
   const hasWon = hiddenPhrase === phrase;
 
   return (
     <div className="WheelOfFortuneGame">
-      <header>
-        <h1>Wheel of Fortune</h1>
-      </header>
-      <AudioController 
-        audioFile="https://dl.vgmdownloads.com/soundtracks/super-mario-bros.-the-30th-anniversary/weknekelam/1-01.%20Ground%20BGM%20-%20Super%20Mario%20Bros..mp3" 
-        playWinSound={hiddenPhrase === phrase && gameOver}
-        playLoseSound={gameOver && hasLost}
+      <HeaderComponent />
+      <AudioController audioFile={require('./assets/01-main-theme-overworld.mp3')}
+      playWinSound={hiddenPhrase === phrase && gameOver}
+      playLoseSound={gameOver && hasLost}
       />
-      <div className="wheel-container">
-        <img src={wheelImage} alt="Wheel of Fortune" />
-      </div>
+
+      {/* {userEnteredGuesses && userName && <UserInfoDisplay googleUID={userEmail}/> && <AllInfoDisplay/>} */}
+      {userEnteredGuesses && userName && (
+        <div>
+          <div className='current-google-id-container'>
+            <div className='google-id'>Google&nbsp;&nbsp;ID: </div>
+            <div className='id-container'>{userEmail}</div>
+          </div>
+          <UserInfoDisplay googleUID={userEmail} refreshTrigger={refreshUserInfo} className="userinfo-display"/>
+          <AllInfoDisplay className="allinfo-display"/>
+        </div>
+      )}
+
+      {/* {userEnteredGuesses && (
+        <UserInfoDisplay googleUID={userEmail} refreshTrigger={refreshUserInfo} />
+      )} */}
+
       {userEnteredGuesses ? (
         <>
-          <div className="phrase-display">The phrase is: {phrase}</div>
-          <div className="hidden-phrase-display">Hidden Phrase: {hiddenPhrase}</div>
+          <div className="change-username">
+            <input
+              type="text"
+              placeholder="Enter  New User Name"
+              value={newUserName}
+              onChange={(e) => setNewUserName(e.target.value)}
+            />
+            <button onClick={handleNewUserName}>Set New Name</button>
+          </div>
+          <div className="phrase-display">The&nbsp;&nbsp;&nbsp;phrase&nbsp;&nbsp;is:&nbsp; {phrase}</div>
+          <div className="hidden-phrase-display">Hidden&nbsp;&nbsp;&nbsp;Phrase: {hiddenPhrase}</div>
           <div className="input-container">
             <input
               type="text"
-              placeholder="Enter  a  letter"
+              placeholder="Enter &nbsp;&nbsp;a&nbsp;&nbsp;&nbsp;&nbsp;letter"
               value={userGuess}
               onChange={(e) => setUserGuess(e.target.value)}
             />
             <button onClick={handleGuess}>Guess</button>
-            <button onClick={purchaseExtraGuesses}>Purchase 3 Extra Guesses</button>
+            <button onClick={purchaseExtraGuesses}>Purchase&nbsp;&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;Extra&nbsp;&nbsp;&nbsp;Guesses</button>
           </div>
           <div className="scoreboard">
-            <p>Score: {score}</p>
+            <p>{userName}'s &nbsp;&nbsp; Score: {score}</p>
             <p>Number of Guesses Allowed: {numOfGuessesAllowed}</p>
             <p>Number of Incorrect Guesses: {numOfIncorrect}</p>
             <p>Number of Guesses Remaining: {numOfGuessesAllowed - numOfGuess}</p>
@@ -199,9 +241,28 @@ function WheelOfFortuneGame() {
         </>
       ) : (
         <div className="start-container">
-          <button onClick={startGame}>Start Game</button>
+          <input
+              type="text"
+              placeholder="Enter  Your User Name"
+              value={userName}
+              onChange={(e) => setUserName(e.target.value)}
+          />
+          <div className='start-button'>
+            <button onClick={startGame}>Start Game</button>
+          </div>
         </div>
       )}
+
+      {/* add ConfirmModal here: */}
+      <ConfirmBox
+        isOpen={showConfirmBox}
+        onClose={() => setShowConfirmBox(false)}
+        onConfirm={() => {
+          saveScoreToDB(userEmail, score, userName, onScoreSaved);
+          setShowConfirmBox(false);
+        }}
+      />
+
       <footer>
         <p>CS514 - Web Game Project - Made by Junyu and Xueting</p>
       </footer>
