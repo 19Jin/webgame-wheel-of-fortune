@@ -185,14 +185,14 @@ function WheelOfFortuneGame({userEmail, onScoreSaved, refreshUserInfo}) {
             <div className='google-id'>Google&nbsp;&nbsp;ID: </div>
             <div className='id-container'>{userEmail}</div>
           </div>
-          <UserInfoDisplay googleUID={userEmail} className="userinfo-display"/>
+          <UserInfoDisplay googleUID={userEmail} refreshTrigger={refreshUserInfo} className="userinfo-display"/>
           <AllInfoDisplay className="allinfo-display"/>
         </div>
       )}
 
-      {userEnteredGuesses && (
+      {/* {userEnteredGuesses && (
         <UserInfoDisplay googleUID={userEmail} refreshTrigger={refreshUserInfo} />
-      )}
+      )} */}
 
       {userEnteredGuesses ? (
         <>
