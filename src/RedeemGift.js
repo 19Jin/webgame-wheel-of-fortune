@@ -1,4 +1,4 @@
-import react ,{useState, useEffect} from "react";
+import React ,{useState, useEffect} from "react";
 import { Link } from 'react-router-dom';
 import './Gift.css';
 import axios from 'axios';
@@ -12,6 +12,7 @@ function RedeemGift({userEmail}) {
     const [user, setUser] = useState([]);
     const [checkOut, setCheckOut] = useState(false);
     const [amount, setAmount] = useState(1);
+    const [activeButton, setActiveButton] = useState(null); 
 
     const [itemId, setItemId] = useState('');
 
@@ -55,18 +56,14 @@ function RedeemGift({userEmail}) {
         setItemId(id);
         console.log(id);
         console.log(checkOut);
-    }
 
-    function handleCheckOut(id) {
-      console.log("clicked");
-      setCheckOut(true);
-      setItemId(id);
-      console.log(id);
-      console.log(checkOut);
-  
-      // add .active class to hit hover style
-      const button = document.querySelector(`.gift-button[data-id="${id}"]`);
-      button.classList.add("active");
+        if (activeButton) {
+          const prevButton = document.querySelector(`.gift-button[data-id="${activeButton}"]`);
+          prevButton.classList.remove("active");
+        }
+        setActiveButton(id);
+        const button = document.querySelector(`.gift-button[data-id="${id}"]`);
+        button.classList.add("active");
     }
 
     document.addEventListener("mouseup", function (e) {
