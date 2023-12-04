@@ -54,27 +54,29 @@ public class CommodityController {
     return commodityList;
   }
 
-//   @GetMapping("/findByUserName")
-//   @ResponseBody
-//   @CrossOrigin(origins = "*")
-//   public List<Score> findByUserName(@RequestParam String userName) {
-//     Iterable<Score> scores = this.scoreRepository.findByUserName(userName);
-//     List<Score> scoreList = new ArrayList<>();
-//     scores.forEach(scoreList::add);
-//     scoreList.sort(Comparator.comparingInt(Score::getScore).reversed());
-//     return scoreList;
-//   }
+  /**
+   * Credit Part:
+   * PUT requist
+   * change the number of products by id and changenumber
+   */
 
-//   @GetMapping("/findByGoogleUID")
-//   @ResponseBody
-//   @CrossOrigin(origins = "*")
-//   public List<Score> findByGoogleUID(@RequestParam String googleUID) {
-//     Iterable<Score> scores = this.scoreRepository.findByGoogleUID(googleUID);
-//     List<Score> scoreList = new ArrayList<>();
-//     scores.forEach(scoreList::add);
-//     scoreList.sort(Comparator.comparingInt(Score::getScore).reversed());
-//     return scoreList;
-//   }  
+  @PutMapping("/updateCommodity/{id}")
+  @CrossOrigin(origins = "*")
+  public ResponseEntity<String> updateCommodity(@PathVariable Long id, @RequestParam int changeAmount) {
+      Optional<Commodity> optionalCommodity = commodityRepository.findById(id);
+      if (optionalCommodity.isEmpty()) {
+          return ResponseEntity.notFound().build();
+      }
+      Commodity commodity = optionalCommodity.get();
+      int currentNumber = commodity.getNumber();
+      
+      //change the amount number of products
+      commodity.setNumber(currentNumber - changeAmount);
+      commodityRepository.save(commodity);
+      return ResponseEntity.ok("Commodity updated successfully");
+  }
+
+
 
 // @DeleteMapping("/{id}")
 //     public ResponseEntity<String> deleteById(@PathVariable Long id) {
@@ -90,17 +92,4 @@ public class CommodityController {
 //         }
 //     }
 
-//   @DeleteMapping("/deleteById")
-//   @ResponseBody
-//   @CrossOrigin(origins = "*")
-//   public ResponseEntity<String> deleteById(@RequestParam Long id) {
-//       Optional<Score> scoreOptional = scoreRepository.findById(id);
-      
-//       if (scoreOptional.isPresent()) {
-//           scoreRepository.delete(scoreOptional.get());
-//           return ResponseEntity.ok("Score deleted successfully");
-//       } else {
-//           return ResponseEntity.notFound().build();
-//       }
-//   }
 }
