@@ -4,11 +4,12 @@ import './Gift.css';
 import axios from 'axios';
 
 
-function RedeemGift() {
+function RedeemGift({userEmail}) {
 
     const [gifts, setGifts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [user, setUser] = useState([]);
 
     function displayAllCommodity() {
         axios.get('https://wheel-of-fortune-406910.wl.r.appspot.com/findAllCommodities')
@@ -23,6 +24,20 @@ function RedeemGift() {
         });
     
     };
+
+    function displayPoints() {
+      axios.get(`http://localhost:8080/findByGoogleUid?googleUid=${userEmail}`)
+      .then(response => {
+        setUser(response.data);  // Axios packs the response in a 'data' property
+        // console.log(gifts);
+        setLoading(false);
+      })
+      .catch(error => {
+        setError(error.message);
+        setLoading(false);
+      });
+  
+  };
   // Function to create rows with 3 gifts each
   const createGiftRows = () => {
     const rows = [];
@@ -50,14 +65,20 @@ function RedeemGift() {
   useEffect(() => {
     // Using Axios to fetch data
    
-        displayAllCommodity()
-    }, []);
+        displayAllCommodity();
+        displayPoints();
+    }, [userEmail]);
 
     if (loading) return <div>Loading...</div>;
     if (error) return <div>Error: {error}</div>;
   
   return (
     <div className="redeem-gifts">
+      <div className="user-points">
+        Your Points: {user.map(i => (
+          <h1>{i.totalPoints}</h1>
+        ))}
+      </div>
       <h1 className="gift-header">Gift Redeem</h1>
       <table className="gift-table">
         <tbody>
