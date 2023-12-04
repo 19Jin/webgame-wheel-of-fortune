@@ -57,6 +57,25 @@ function RedeemGift({userEmail}) {
         console.log(checkOut);
     }
 
+    function handleCheckOut(id) {
+      console.log("clicked");
+      setCheckOut(true);
+      setItemId(id);
+      console.log(id);
+      console.log(checkOut);
+  
+      // add .active class to hit hover style
+      const button = document.querySelector(`.gift-button[data-id="${id}"]`);
+      button.classList.add("active");
+    }
+
+    document.addEventListener("mouseup", function (e) {
+      const button = document.querySelector(".gift-button");
+      if (!button.contains(e.target)) {
+          button.classList.remove("active");
+      }
+    });
+
     function handleFormSubmit(e) {
         e.preventDefault(); // Prevents the default form submit action
         // Implement what you want to do with the form data here
@@ -86,7 +105,7 @@ function RedeemGift({userEmail}) {
         <tr key={i}>
           {rowGifts.map(gift => (
             <td key={gift.id}>
-              <button className="gift-button" onClick={() => handleCheckOut(gift.id)}>
+              <button className="gift-button" data-id={gift.id} onClick={() => handleCheckOut(gift.id)}>
                 <img className="gift-image" src={gift.imageLink} alt={`Gift ${gift.number}`} />
                 <p>Gift Name: {gift.itemName}</p>
                 <p>Number: {gift.number}</p>
