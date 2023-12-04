@@ -1,24 +1,34 @@
 .gift-button{
-    height: 200px;
+    height: 230px;
     width: 300px;
+    /* border: 3px dashed #ff9b205d;  */
+    border: 5px dashed #fff8dc;
+    transition: border-color 0.3s ease;
   }
   
+  .gift-button:hover,  .gift-button.active{
+    border-color: #ff4a2fe9; 
+    background-color: #884b00;
+  }
+
   .gift-table{
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 100px;
-    
   }
   
   .gift-header{
     margin-top: 100px;
-    margin-bottom: 100px;
-    font-size: 50px;
+    margin-bottom: 50px;
+    font-size: 80px;
+    color: #813800;
+    text-shadow: 5px 5px 0px #ff9b20e9;
   }
   
   .gift-image{
-    height: 100px;
-    width: 200px;
+    max-width: 60%;
+    max-height: 60%;
+    object-fit: contain;
   }
 
   p{
@@ -32,6 +42,7 @@
     font-family: 'PixelFont', sans-serif;
     font-size: 30px;
     color: #ff4c20e9;
+    text-shadow: 5px 5px 0px #ffa12ee9;
   }
 
   .checkout-form{
@@ -48,9 +59,10 @@
     width: 300px;
     margin: 0 auto;
     padding: 20px;
-    border: 1px solid #ccc;
+    border: 3px dashed #ff9b20e9;
     background-color: #f9f9f9;
     text-align: center;
+    border-radius: 30px;
   }
   
   .vertical-form-container h2 {

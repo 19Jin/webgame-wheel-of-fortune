@@ -1,4 +1,4 @@
-import react ,{useState, useEffect} from "react";
+import React ,{useState, useEffect} from "react";
 import { Link } from 'react-router-dom';
 import './Gift.css';
 import axios from 'axios';
@@ -12,6 +12,7 @@ function RedeemGift({userEmail}) {
     const [user, setUser] = useState([]);
     const [checkOut, setCheckOut] = useState(false);
     const [amount, setAmount] = useState(1);
+    const [activeButton, setActiveButton] = useState(null); 
 
     const [itemId, setItemId] = useState('');
 
@@ -55,7 +56,22 @@ function RedeemGift({userEmail}) {
         setItemId(id);
         console.log(id);
         console.log(checkOut);
+
+        if (activeButton) {
+          const prevButton = document.querySelector(`.gift-button[data-id="${activeButton}"]`);
+          prevButton.classList.remove("active");
+        }
+        setActiveButton(id);
+        const button = document.querySelector(`.gift-button[data-id="${id}"]`);
+        button.classList.add("active");
     }
+
+    document.addEventListener("mouseup", function (e) {
+      const button = document.querySelector(".gift-button");
+      if (!button.contains(e.target)) {
+          button.classList.remove("active");
+      }
+    });
 
     function handleFormSubmit(e) {
         e.preventDefault(); // Prevents the default form submit action
@@ -86,7 +102,7 @@ function RedeemGift({userEmail}) {
         <tr key={i}>
           {rowGifts.map(gift => (
             <td key={gift.id}>
-              <button className="gift-button" onClick={() => handleCheckOut(gift.id)}>
+              <button className="gift-button" data-id={gift.id} onClick={() => handleCheckOut(gift.id)}>
                 <img className="gift-image" src={gift.imageLink} alt={`Gift ${gift.number}`} />
                 <p>Gift Name: {gift.itemName}</p>
                 <p>Number: {gift.number}</p>
