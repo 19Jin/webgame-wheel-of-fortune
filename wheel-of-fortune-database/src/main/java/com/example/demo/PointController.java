@@ -54,11 +54,11 @@ public class PointController {
     return pointList;
   }
   
-  @GetMapping("/findByGoogleUid")
+  @GetMapping("/findByGoogle")
   @ResponseBody
   @CrossOrigin(origins = "*")
-  public List<Point> findByGoogleUid(@RequestParam String googleUid) {
-    Iterable<Point> points = this.pointRepository.findByGoogleUid(googleUid);
+  public List<Point> findByGoogle(@RequestParam String google) {
+    Iterable<Point> points = this.pointRepository.findByGoogle(google);
     List<Point> pointList = new ArrayList<>();
     points.forEach(pointList::add);
     pointList.sort(Comparator.comparingInt(Point::getTotalPoints).reversed());

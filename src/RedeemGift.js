@@ -26,7 +26,7 @@ function RedeemGift({userEmail}) {
     };
 
     function displayPoints() {
-      axios.get(`http://localhost:8080/findByGoogleUid?googleUid=${userEmail}`)
+      axios.get(`https://wheel-of-fortune-406910.wl.r.appspot.com/findByGoogle?google=${userEmail}`)
       .then(response => {
         setUser(response.data);  // Axios packs the response in a 'data' property
         // console.log(gifts);
