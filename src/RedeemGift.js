@@ -1,4 +1,4 @@
-import react ,{useState, useEffect} from "react";
+import React ,{useState, useEffect} from "react";
 import { Link } from 'react-router-dom';
 import './Gift.css';
 import axios from 'axios';
@@ -12,6 +12,7 @@ function RedeemGift({userEmail}) {
     const [user, setUser] = useState([]);
     const [checkOut, setCheckOut] = useState(false);
     const [amount, setAmount] = useState(1);
+    const [activeButton, setActiveButton] = useState(null); 
     const [checkOutPrice, setCheckOutPrice] = useState(0);
     const [totalPoints, setTotalPoints] = useState(0);
 
@@ -58,12 +59,28 @@ function RedeemGift({userEmail}) {
         setItemId(id);
         setCheckOutPrice(price);
         console.log(id);
+        console.log(checkOut);
         console.log(price);
         console.log(totalPoints);
         console.log(amount*price);
         console.log(userId);
 
+        if (activeButton) {
+            const prevButton = document.querySelector(`.gift-button[data-id="${activeButton}"]`);
+            prevButton.classList.remove("active");
+        }
+        setActiveButton(id);
+        const button = document.querySelector(`.gift-button[data-id="${id}"]`);
+        button.classList.add("active");
+
     }
+
+    document.addEventListener("mouseup", function (e) {
+        const button = document.querySelector(".gift-button");
+        if (!button.contains(e.target)) {
+            button.classList.remove("active");
+        }
+    });
 
     function handleUserId() {
         user.map(i => (
@@ -74,12 +91,12 @@ function RedeemGift({userEmail}) {
         ))
     }
 
+
+
     function handleFormSubmit(e) {
         e.preventDefault(); // Prevents the default form submit action
         // Implement what you want to do with the form data here
         console.log({ name, email, phone, address });
-        // const request1 = axios.put(`https://wheel-of-fortune-406910.wl.r.appspot.com/updateCommodity/${itemId}?changeAmount=${amount}`);
-        // const request2 = axios.put(`https://wheel-of-fortune-406910.wl.r.appspot.com/updatePoint/${userId}?changeAmount=${amount * checkOutPrice}`);
 
         if(totalPoints - (amount*checkOutPrice) >= 0){
             const request1 = axios.put(`https://wheel-of-fortune-406910.wl.r.appspot.com/updateCommodity/${itemId}?changeAmount=${amount}`);
@@ -143,7 +160,7 @@ function RedeemGift({userEmail}) {
         <tr key={i}>
           {rowGifts.map(gift => (
             <td key={gift.id}>
-              <button className="gift-button" onClick={() => handleCheckOut(gift.id, gift.price)}>
+              <button className="gift-button" data-id={gift.id} onClick={() => handleCheckOut(gift.id, gift.price)}>
                 <img className="gift-image" src={gift.imageLink} alt={`Gift ${gift.number}`} />
                 <p>Gift Name: {gift.itemName}</p>
                 <p>Number: {gift.number}</p>
