@@ -5,6 +5,7 @@ import HeaderComponent from './HeaderComponent';
 import UserInfoDisplay from './UserInfoDisplay';
 import {saveScoreToDB} from './SaveData';
 import AllInfoDisplay from './AllInfoDisplay';
+import ConfirmBox from './ConfirmBox';
 
 function WheelOfFortuneGame({userEmail, onScoreSaved, refreshUserInfo}) {
   const [numOfGuessesAllowed, setNumOfGuessesAllowed] = useState(0);
@@ -20,6 +21,7 @@ function WheelOfFortuneGame({userEmail, onScoreSaved, refreshUserInfo}) {
   const [hasLost, setHasLost] = useState(false);
   const [userName, setUserName] = useState('');
   const [newUserName, setNewUserName] = useState('');
+  const [showConfirmBox, setShowConfirmBox] = useState(false);
 
   useEffect(() => {
     setNumOfGuessesAllowed(10);
@@ -95,7 +97,12 @@ function WheelOfFortuneGame({userEmail, onScoreSaved, refreshUserInfo}) {
     const won = hiddenPhrase === phrase;
     setGameOver(true);
 
-    saveScoreToDB(userEmail, score, userName, onScoreSaved);
+    setShowConfirmBox(true);
+
+    // const updateScore = window.confirm('Game Over. Do you want to update this game score?');
+    // if (updateScore) {
+    //   saveScoreToDB(userEmail, score, userName, onScoreSaved);
+    // }
 
     if (!won) {
       setHasLost(true);
@@ -244,6 +251,17 @@ function WheelOfFortuneGame({userEmail, onScoreSaved, refreshUserInfo}) {
           </div>
         </div>
       )}
+
+      {/* add ConfirmModal here: */}
+      <ConfirmBox
+        isOpen={showConfirmBox}
+        onClose={() => setShowConfirmBox(false)}
+        onConfirm={() => {
+          saveScoreToDB(userEmail, score, userName, onScoreSaved);
+          setShowConfirmBox(false);
+        }}
+      />
+
       <footer>
         <p>CS514 - Web Game Project - Made by Junyu and Xueting</p>
       </footer>
