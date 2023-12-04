@@ -179,7 +179,7 @@ footer {
   border-radius: 15px;
   background-color: transparent; 
   padding: 10px; /* 内边距 */
-  border: 3px dashed #ff9b20e9; 
+  border: 3px dashed #ff9b205d; 
   box-shadow: 0px 0px 10px rgba(0,0,0,0.1); /* 阴影效果 */
   font-family: 'PixelFont', sans-serif;
 }
