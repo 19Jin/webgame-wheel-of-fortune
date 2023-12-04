@@ -1,7 +1,6 @@
 .gift-button{
     height: 230px;
     width: 300px;
-    /* border: 3px dashed #ff9b205d;  */
     border: 5px dashed #fff8dc;
     transition: border-color 0.3s ease;
   }

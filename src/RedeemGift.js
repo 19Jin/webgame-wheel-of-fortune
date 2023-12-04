@@ -13,8 +13,11 @@ function RedeemGift({userEmail}) {
     const [checkOut, setCheckOut] = useState(false);
     const [amount, setAmount] = useState(1);
     const [activeButton, setActiveButton] = useState(null); 
+    const [checkOutPrice, setCheckOutPrice] = useState(0);
+    const [totalPoints, setTotalPoints] = useState(0);
 
     const [itemId, setItemId] = useState('');
+    const [userId, setUserId] = useState('');
 
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
@@ -50,47 +53,102 @@ function RedeemGift({userEmail}) {
   
     };
 
-    function handleCheckOut(id) {
+    function handleCheckOut(id, price) {
         console.log("clicked");
         setCheckOut(true);
         setItemId(id);
+        setCheckOutPrice(price);
         console.log(id);
         console.log(checkOut);
+        console.log(price);
+        console.log(totalPoints);
+        console.log(amount*price);
+        console.log(userId);
 
         if (activeButton) {
-          const prevButton = document.querySelector(`.gift-button[data-id="${activeButton}"]`);
-          prevButton.classList.remove("active");
+            const prevButton = document.querySelector(`.gift-button[data-id="${activeButton}"]`);
+            prevButton.classList.remove("active");
         }
         setActiveButton(id);
         const button = document.querySelector(`.gift-button[data-id="${id}"]`);
         button.classList.add("active");
+
     }
 
     document.addEventListener("mouseup", function (e) {
-      const button = document.querySelector(".gift-button");
-      if (!button.contains(e.target)) {
-          button.classList.remove("active");
-      }
+        const button = document.querySelector(".gift-button");
+        if (!button.contains(e.target)) {
+            button.classList.remove("active");
+        }
     });
+
+    function handleUserId() {
+        user.map(i => (
+            setTotalPoints(i.totalPoints)
+        ))
+        user.map(i => (
+            setUserId(i.id)
+        ))
+    }
+
+
 
     function handleFormSubmit(e) {
         e.preventDefault(); // Prevents the default form submit action
         // Implement what you want to do with the form data here
         console.log({ name, email, phone, address });
 
-        axios.put(`https://wheel-of-fortune-406910.wl.r.appspot.com/updateCommodity/${itemId}?changeAmount=${amount}`)
-        .then((response) => {
-             // Axios packs the response in a 'data' property
-            console.log('Commodity item updated successfully:', response.data);
+        if(totalPoints - (amount*checkOutPrice) >= 0){
+            const request1 = axios.put(`https://wheel-of-fortune-406910.wl.r.appspot.com/updateCommodity/${itemId}?changeAmount=${amount}`);
+            const request2 = axios.put(`https://wheel-of-fortune-406910.wl.r.appspot.com/updatePoint/${userId}?changeAmount=${amount * checkOutPrice}`);
+            Promise.all([request1, request2])
+            .then((responses) => {
+              // Handle success for both requests
+              const [response1, response2] = responses;
+              console.log('Commodity item updated successfully:', response1.data);
+              console.log('Point updated successfully:', response2.data);
+        
+              setLoading(false);
+              window.location.reload();
+            })
+            .catch((error) => {
+              // Handle errors for both requests
+              setError(error.message);
+              setLoading(false);
+            });
+        }else{
+            alert('You do not have enough points!')
+        }
+
+        // axios.put(`https://wheel-of-fortune-406910.wl.r.appspot.com/updateCommodity/${itemId}?changeAmount=${amount}`)
+        // .then((response) => {
+        //      // Axios packs the response in a 'data' property
+        //     console.log('Commodity item updated successfully:', response.data);
             
-            setLoading(false);
-            window.location.reload();
-          })
-          .catch(error => {
-            setError(error.message);
-            setLoading(false);
-          });
-        // You might want to send this data to a server or use it in another way
+        //     setLoading(false);
+        //     window.location.reload();
+        //   })
+        //   .catch(error => {
+        //     setError(error.message);
+        //     setLoading(false);
+        //   });
+        // if(totalPoints - (amount*checkOutPrice) >= 0){
+        //     axios.put(`https://wheel-of-fortune-406910.wl.r.appspot.com/updatePoint/${userId}?changeAmount=${amount*checkOutPrice}`)
+        //     // You might want to send this data to a server or use it in another way
+        //     .then((response) => {
+        //         // Axios packs the response in a 'data' property
+        //        console.log('Point updated successfully:', response.data);
+               
+        //        setLoading(false);
+        //        window.location.reload();
+        //      })
+        //      .catch(error => {
+        //        setError(error.message);
+        //        setLoading(false);
+        //      });
+        // }else{
+        //     alert('You do not have enough points!')
+        // }
     }
 
   // Function to create rows with 3 gifts each
@@ -102,7 +160,7 @@ function RedeemGift({userEmail}) {
         <tr key={i}>
           {rowGifts.map(gift => (
             <td key={gift.id}>
-              <button className="gift-button" data-id={gift.id} onClick={() => handleCheckOut(gift.id)}>
+              <button className="gift-button" data-id={gift.id} onClick={() => handleCheckOut(gift.id, gift.price)}>
                 <img className="gift-image" src={gift.imageLink} alt={`Gift ${gift.number}`} />
                 <p>Gift Name: {gift.itemName}</p>
                 <p>Number: {gift.number}</p>
@@ -119,9 +177,10 @@ function RedeemGift({userEmail}) {
 
   useEffect(() => {
     // Using Axios to fetch data
-   
+        handleUserId();
         displayAllCommodity();
         displayPoints();
+        
     }, [userEmail]);
 
     if (loading) return <div>Loading...</div>;
@@ -188,7 +247,7 @@ function RedeemGift({userEmail}) {
             onChange={(e) => setAmount(e.target.value)}
           />
         </div>
-        <button type="submit" >Submit</button>
+        <button type="submit" onClick={handleUserId}>Submit</button>
       </form>
     </div>) :
       (<div></div>)}

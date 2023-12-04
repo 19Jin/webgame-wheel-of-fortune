@@ -65,4 +65,21 @@ public class PointController {
     return pointList;
   }
 
+
+  @PutMapping("/updatePoint/{id}")
+  @CrossOrigin(origins = "*")
+  public ResponseEntity<String> updatePoint(@PathVariable Long id, @RequestParam int changeAmount) {
+      Optional<Point> optionalPoint = pointRepository.findById(id);
+      if (optionalPoint.isEmpty()) {
+          return ResponseEntity.notFound().build();
+      }
+      Point point = optionalPoint.get();
+      int currentNumber = point.getTotalPoints();
+      
+      //change the amount number of products
+      point.setTotalPoints(currentNumber - changeAmount);
+      pointRepository.save(point);
+      return ResponseEntity.ok("Point updated successfully");
+  }
+
 }
