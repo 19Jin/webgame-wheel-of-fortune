@@ -9,12 +9,12 @@ import org.springframework.data.domain.Sort;
 
 public interface PointRepository extends DatastoreRepository<Point, Long> {
 
-  List<Point> findByGoogleUid(String googleUid);
+  List<Point> findByGoogle(String google);
 
   List<Point> findByTotalPointsGreaterThan(int totalPoints);
 
-  List<Point> findByGoogleUidAndTotalPoints(String googleUid, int totalPoints);
+  List<Point> findByGoogleAndTotalPoints(String google, int totalPoints);
 
-  List<Point> findByGoogleUid(String googleUid, Sort sort);
+  List<Point> findByGoogle(String google, Sort sort);
 
 }

@@ -8,12 +8,12 @@ public class Point {
   @Id
   Long id;
 
-  String googleUid;
+  String google;
 
   int totalPoints;
 
-  public Point(String googleUid, int totalPoints) {
-    this.googleUid = googleUid;
+  public Point(String google, int totalPoints) {
+    this.google = google;
     this.totalPoints = totalPoints;
   }
 
@@ -25,12 +25,12 @@ public class Point {
   	this.id=id;
   }
   
-  public String getGoogleUid() {
-  	return this.googleUid;
+  public String getGoogle() {
+  	return this.google;
   }
   
-  public void setGoogleUid(String googleUid) {
-  	this.googleUid=googleUid;
+  public void setGoogle(String google) {
+  	this.google=google;
   }
 
 
@@ -47,7 +47,7 @@ public class Point {
   public String toString() {
     return "{" +
         "id:" + this.id +
-        ", googleUID:'" + this.googleUid + '\'' +
+        ", google UID:'" + this.google + '\'' +
         ", Total Points::" + this.totalPoints + 
         '}';
   }
